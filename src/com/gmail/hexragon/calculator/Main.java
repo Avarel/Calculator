@@ -25,13 +25,13 @@ public class Main extends Application
         FXMLLoader loader = new FXMLLoader(getClass().getResource("calculatorGUI.fxml"));
         Parent root = loader.load();
 
-
         primaryStage.setTitle("Calculator");
         primaryStage.setScene(new Scene(root));
         primaryStage.setResizable(false);
 
-        primaryStage.getIcons().add(new Image("file:icon.png"));
+
         primaryStage.initStyle(StageStyle.UNDECORATED);
+        primaryStage.getIcons().add(new Image(this.getClass().getResourceAsStream("icon.png")));
 
         Controller controller = loader.getController();
         controller.setup();
