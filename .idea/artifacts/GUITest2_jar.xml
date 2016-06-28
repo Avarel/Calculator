@@ -1,0 +1,9 @@
+<component name="ArtifactManager">
+  <artifact type="jar" name="GUITest2:jar">
+    <output-path>$PROJECT_DIR$/out/artifacts/GUITest2_jar</output-path>
+    <root id="archive" name="GUITest2_jar.jar">
+      <element id="module-output" name="CalculatorFX" />
+      <element id="extracted-dir" path="$PROJECT_DIR$/lib/jfoenix.jar" path-in-jar="/" />
+    </root>
+  </artifact>
+</component>
