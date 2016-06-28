@@ -1,4 +1,4 @@
-package sample;
+package com.gmail.hexragon.calculator;
 
 import com.jfoenix.controls.JFXDrawer;
 import com.jfoenix.controls.JFXTextField;
@@ -13,6 +13,9 @@ import java.text.DecimalFormat;
 import java.text.ParseException;
 import java.util.Random;
 
+/*
+ * Higher level handling of forming numbers and functions.
+ */
 public class Controller
 {
     public JFXTextField positiveNegativeIndicator;

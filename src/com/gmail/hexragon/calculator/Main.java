@@ -1,4 +1,4 @@
-package sample;
+package com.gmail.hexragon.calculator;
 
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
@@ -9,6 +9,9 @@ import javafx.stage.StageStyle;
 
 import java.io.IOException;
 
+/*
+ * Application load base.
+ */
 public class Main extends Application
 {
     protected Stage stage;

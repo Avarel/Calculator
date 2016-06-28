@@ -1,5 +1,8 @@
-package sample;
+package com.gmail.hexragon.calculator;
 
+/*
+ * Lower-level handling of numbers, emulating a calculator.
+ */
 public class Calculator
 {
     public enum OperatorState
