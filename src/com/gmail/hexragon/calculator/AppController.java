@@ -360,7 +360,7 @@ public class AppController
      * These immediately modify a number without further input.
      */
     public void functionClick(ActionEvent actionEvent)
-    {
+        {
         try
         {
             switch (((Button) actionEvent.getSource()).getText())
@@ -377,15 +377,56 @@ public class AppController
                     holdingNumberField.setText("1 / " + numberField.getText());
                     setNumberField(1d / displayFormat.parse(numberField.getText()).doubleValue());
                     break;
-            }
+                case "sin":
+                    holdingNumberField.setText("sin(" + numberField.getText() + ")");
+                    setNumberField(Math.sin(displayFormat.parse(numberField.getText()).doubleValue()));
+                    break;
+                case "cos":
+                    holdingNumberField.setText("cos(" + numberField.getText() + ")");
+                    setNumberField(Math.cos(displayFormat.parse(numberField.getText()).doubleValue()));
+                    break;
+                case "tan":
+                    holdingNumberField.setText("tan(" + numberField.getText() + ")");
+                    setNumberField(Math.tan(displayFormat.parse(numberField.getText()).doubleValue()));
+                    break;
+                case "sin-1":
+                    holdingNumberField.setText("sin-1(" + numberField.getText() + ")");
+                    setNumberField(Math.asin(displayFormat.parse(numberField.getText()).doubleValue()));
+                    break;
+                case "cos-1":
+                    holdingNumberField.setText("cos-1(" + numberField.getText() + ")");
+                    setNumberField(Math.acos(displayFormat.parse(numberField.getText()).doubleValue()));
+                    break;
+                case "tan-1":
+                    holdingNumberField.setText("tan-1(" + numberField.getText() + ")");
+                    setNumberField(Math.atan(displayFormat.parse(numberField.getText()).doubleValue()));
+                    break;
+                case "log":
+                    holdingNumberField.setText("log(" + numberField.getText() + ")");
+                    setNumberField(Math.log10(displayFormat.parse(numberField.getText()).doubleValue()));
+                    break;
+                case "ln":
+                    holdingNumberField.setText("ln(" + numberField.getText() + ")");
+                    setNumberField(Math.log(displayFormat.parse(numberField.getText()).doubleValue()));
+                    break;
+                case "x!":
+                    holdingNumberField.setText(numberField.getText() + "!");
+                    setNumberField(factorial(displayFormat.parse(numberField.getText()).longValue()));
+                    break;
 
+            }
         }
         catch (ParseException e)
         {
             e.printStackTrace();
         }
+    }
 
-
+    long factorial(long number) {
+        if (number <= 1)
+            return 1;
+        else
+            return number * factorial(number - 1);
     }
 
     public void backspaceClick()
@@ -483,7 +524,7 @@ public class AppController
             case "e":
                 setNumberField(Math.E);
                 break;
-            case "Rnd":
+            case "Rand":
                 setNumberField(Math.random());
                 break;
         }

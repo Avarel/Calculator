@@ -15,7 +15,7 @@
         <RowConstraints minHeight="395.0" vgrow="SOMETIMES" />
     </rowConstraints>
     <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="355.0" prefWidth="300.0" style="-fx-background-color: #404040;">
-        <GridPane AnchorPane.bottomAnchor="14.0" AnchorPane.leftAnchor="14.0" AnchorPane.rightAnchor="14.0" AnchorPane.topAnchor="14.0">
+        <GridPane AnchorPane.bottomAnchor="70.0" AnchorPane.leftAnchor="14.0" AnchorPane.rightAnchor="14.0" AnchorPane.topAnchor="14.0">
             <columnConstraints>
                 <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
                 <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
@@ -28,44 +28,43 @@
                 <RowConstraints minHeight="10.0" prefHeight="30.0" valignment="CENTER" vgrow="SOMETIMES" />
                 <RowConstraints minHeight="10.0" prefHeight="30.0" valignment="CENTER" vgrow="SOMETIMES" />
                 <RowConstraints minHeight="10.0" prefHeight="30.0" valignment="CENTER" vgrow="SOMETIMES" />
-                <RowConstraints minHeight="10.0" prefHeight="30.0" valignment="CENTER" vgrow="SOMETIMES" />
             </rowConstraints>
-            <JFXButton maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="50.0" prefWidth="50.0" style="-fx-background-color: #99ffcc;" text="sin" GridPane.rowIndex="2">
+            <JFXButton maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" onAction="#functionClick" prefHeight="50.0" prefWidth="50.0" style="-fx-background-color: #99ffcc;" text="sin" GridPane.rowIndex="2">
                 <font>
                     <Font name="System Bold" size="15.0" />
                 </font>
             </JFXButton>
-            <JFXButton maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="50.0" prefWidth="50.0" style="-fx-background-color: #99ffcc;" text="cos" GridPane.columnIndex="1" GridPane.rowIndex="2">
+            <JFXButton maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" onAction="#functionClick" prefHeight="50.0" prefWidth="50.0" style="-fx-background-color: #99ffcc;" text="cos" GridPane.columnIndex="1" GridPane.rowIndex="2">
                 <font>
                     <Font name="System Bold" size="15.0" />
                 </font>
             </JFXButton>
-            <JFXButton maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="50.0" prefWidth="50.0" style="-fx-background-color: #99ffcc;" text="tan" GridPane.columnIndex="2" GridPane.rowIndex="2">
+            <JFXButton maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" onAction="#functionClick" prefHeight="50.0" prefWidth="50.0" style="-fx-background-color: #99ffcc;" text="tan" GridPane.columnIndex="2" GridPane.rowIndex="2">
                 <font>
                     <Font name="System Bold" size="15.0" />
                 </font>
             </JFXButton>
-            <JFXButton maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="50.0" prefWidth="50.0" style="-fx-background-color: #99ffcc;" text="ln" GridPane.rowIndex="4">
+            <JFXButton maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" onAction="#functionClick" prefHeight="50.0" prefWidth="50.0" style="-fx-background-color: #99ffcc;" text="ln" GridPane.rowIndex="4">
                 <font>
                     <Font name="System Bold" size="15.0" />
                 </font>
             </JFXButton>
-            <JFXButton maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="50.0" prefWidth="50.0" style="-fx-background-color: #99ffcc;" text="log" GridPane.columnIndex="1" GridPane.rowIndex="4">
+            <JFXButton maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" onAction="#functionClick" prefHeight="50.0" prefWidth="50.0" style="-fx-background-color: #99ffcc;" text="log" GridPane.columnIndex="1" GridPane.rowIndex="4">
                 <font>
                     <Font name="System Bold" size="15.0" />
                 </font>
             </JFXButton>
-            <JFXButton maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="50.0" prefWidth="50.0" style="-fx-background-color: #99ffcc;" text="sin-1" GridPane.rowIndex="3" />
-            <JFXButton maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="50.0" prefWidth="50.0" style="-fx-background-color: #99ffcc;" text="cos-1" GridPane.columnIndex="1" GridPane.rowIndex="3" />
-            <JFXButton maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="50.0" prefWidth="50.0" style="-fx-background-color: #99ffcc;" text="tan-1" GridPane.columnIndex="2" GridPane.rowIndex="3" />
-            <JFXButton maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="50.0" prefWidth="50.0" style="-fx-background-color: #99ffcc;" text="x!" GridPane.columnIndex="2" GridPane.rowIndex="4">
+            <JFXButton maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" onAction="#functionClick" prefHeight="50.0" prefWidth="50.0" style="-fx-background-color: #99ffcc;" text="sin-1" GridPane.rowIndex="3" />
+            <JFXButton maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" onAction="#functionClick" prefHeight="50.0" prefWidth="50.0" style="-fx-background-color: #99ffcc;" text="cos-1" GridPane.columnIndex="1" GridPane.rowIndex="3" />
+            <JFXButton maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" onAction="#functionClick" prefHeight="50.0" prefWidth="50.0" style="-fx-background-color: #99ffcc;" text="tan-1" GridPane.columnIndex="2" GridPane.rowIndex="3" />
+            <JFXButton maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" onAction="#functionClick" prefHeight="50.0" prefWidth="50.0" style="-fx-background-color: #99ffcc;" text="x!" GridPane.columnIndex="2" GridPane.rowIndex="4">
                 <font>
                     <Font name="System Bold" size="15.0" />
                 </font>
             </JFXButton>
          <JFXButton buttonType="RAISED" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" onAction="#arithmeticSignClick" prefHeight="50.0" prefWidth="50.0" ripplerFill="WHITE" style="-fx-background-color: #99ccff;" text="mod" GridPane.columnIndex="3" GridPane.rowIndex="2">
             <font>
-               <Font name="System Bold" size="12.0" />
+               <Font name="System Bold" size="13.0" />
             </font>
          </JFXButton>
          <JFXButton buttonType="RAISED" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" onAction="#arithmeticSignClick" prefHeight="50.0" prefWidth="50.0" ripplerFill="WHITE" style="-fx-background-color: #99ccff;" text="^" GridPane.columnIndex="3" GridPane.rowIndex="1">
@@ -75,7 +74,7 @@
          </JFXButton>
          <JFXButton buttonType="RAISED" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" onAction="#arithmeticSignClick" prefHeight="50.0" prefWidth="50.0" ripplerFill="WHITE" style="-fx-background-color: #99ccff;" text="EE" GridPane.columnIndex="3" GridPane.rowIndex="3">
             <font>
-               <Font name="System Bold" size="12.0" />
+               <Font name="System Bold" size="15.0" />
             </font>
          </JFXButton>
          <JFXButton maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" onAction="#presetNumberClick" prefHeight="50.0" prefWidth="50.0" style="-fx-background-color: #ffccff;" text="π" GridPane.rowIndex="1">
@@ -88,11 +87,21 @@
                <Font name="System Bold" size="15.0" />
             </font>
          </JFXButton>
-         <JFXButton maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" onAction="#presetNumberClick" prefHeight="50.0" prefWidth="50.0" style="-fx-background-color: #ffccff;" text="Rnd" GridPane.columnIndex="2" GridPane.rowIndex="1">
+         <JFXButton maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" onAction="#presetNumberClick" prefHeight="50.0" prefWidth="50.0" style="-fx-background-color: #ffccff;" text="Rand" GridPane.columnIndex="2" GridPane.rowIndex="1">
+            <font>
+               <Font name="System Bold" size="13.0" />
+            </font>
+         </JFXButton>
+         <JFXButton buttonType="RAISED" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" onAction="#drawerToggle" prefHeight="50.0" prefWidth="50.0" ripplerFill="WHITE" style="-fx-background-color: #ffb3b3;" text="▼" GridPane.columnIndex="3" GridPane.rowIndex="4">
             <font>
                <Font name="System Bold" size="15.0" />
             </font>
          </JFXButton>
         </GridPane>
+      <JFXButton layoutX="22.0" layoutY="298.0" onAction="#sourceClick" prefHeight="40.0" prefWidth="255.0" style="-fx-background-color: #666666;" text="GitHub" textFill="WHITE" AnchorPane.bottomAnchor="22.0" AnchorPane.leftAnchor="22.0" AnchorPane.rightAnchor="22.0">
+         <font>
+            <Font name="System Bold" size="15.0" />
+         </font>
+      </JFXButton>
     </AnchorPane>
 </GridPane>
