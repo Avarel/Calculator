@@ -5,18 +5,9 @@ package com.gmail.hexragon.calculator;
  */
 public class Calculator
 {
-    public enum OperatorState
-    {
-        ADD,
-        SUBTRACT,
-        MULTIPLY,
-        DIVIDE,
-        EXPONENTIAL
-    }
-
-    public Double holdingNumber;
-    public Double currentNumber;
-    public OperatorState state;
+    private Double holdingNumber;
+    private Double currentNumber;
+    private OperatorState state;
 
     public Double getCurrentNumber()
     {
@@ -33,6 +24,11 @@ public class Calculator
         this.holdingNumber = holdingNumber;
     }
 
+    public OperatorState getState()
+    {
+        return state;
+    }
+
     public void setState(OperatorState state)
     {
         this.state = state;
@@ -40,7 +36,7 @@ public class Calculator
 
     public Double consume(double number)
     {
-        switch(state)
+        switch (state)
         {
             case ADD:
                 currentNumber = holdingNumber + number;
@@ -57,8 +53,24 @@ public class Calculator
             case EXPONENTIAL:
                 currentNumber = Math.pow(holdingNumber, number);
                 break;
+            case MODULUS:
+                currentNumber = holdingNumber % number;
+                break;
+            case ENTEREXPONENTIAL:
+                currentNumber = holdingNumber * Math.pow(10, number);
+                break;
         }
         return currentNumber;
+    }
 
+    public enum OperatorState
+    {
+        ADD,
+        SUBTRACT,
+        MULTIPLY,
+        DIVIDE,
+        EXPONENTIAL,
+        MODULUS,
+        ENTEREXPONENTIAL
     }
 }

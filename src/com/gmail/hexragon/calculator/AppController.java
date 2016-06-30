@@ -4,11 +4,15 @@ import com.jfoenix.controls.JFXDrawer;
 import com.jfoenix.controls.JFXTextField;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.scene.control.Button;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.GridPane;
 import javafx.stage.Stage;
 
+import java.io.IOException;
+import java.net.URI;
+import java.net.URISyntaxException;
 import java.text.DecimalFormat;
 import java.text.ParseException;
 import java.util.Random;
@@ -16,34 +20,53 @@ import java.util.Random;
 /*
  * Higher level handling of forming numbers and functions.
  */
-public class Controller
+public class AppController
 {
-    public JFXTextField positiveNegativeIndicator;
-    public JFXTextField holdingNumberField;
-    public JFXDrawer drawer;
-    private Calculator calculator;
-    private Stage stage;
+    private final Stage stage;
 
     @FXML
-    public GridPane root;
+    protected JFXTextField positiveNegativeIndicator;
 
-    public JFXTextField numberField;
-    public AnchorPane titleBar;
+    @FXML
+    protected JFXTextField holdingNumberField;
+
+    @FXML
+    protected JFXDrawer drawer;
+
+    @FXML
+    protected GridPane root;
+
+    @FXML
+    protected JFXTextField numberField;
+
+    @FXML
+    protected AnchorPane titleBar;
+
+    DecimalFormat displayFormat = new DecimalFormat("#,###.#########");
+
+    /*
+     * The calculation takes place in this instance.
+     * The AppController provides a layer of higher-level
+     * handling such as forming and formatting numbers,
+     * handling functions and displaying GUI components.
+     */
+    private Calculator calculator;
 
     private double xOffset = 0;
     private double yOffset = 0;
 
-    DecimalFormat displayFormat = new DecimalFormat("#,###.#########");
-
     private boolean decimalSwitch;
     private boolean newNumberSwitch;
-
     private boolean previousArithmeticSignClick;
+
+    protected AppController(Stage stage)
+    {
+        this.stage = stage;
+    }
 
     public void setup()
     {
         calculator = new Calculator();
-        stage = (Stage) root.getScene().getWindow();
 
         titleBar.setOnMousePressed(event ->
         {
@@ -51,17 +74,33 @@ public class Controller
             yOffset = event.getSceneY();
         });
 
+        final Stage finalStage = stage;
         titleBar.setOnMouseDragged(event ->
         {
-            stage.setX(event.getScreenX() - xOffset);
-            stage.setY(event.getScreenY() - yOffset);
+            finalStage.setX(event.getScreenX() - xOffset);
+            finalStage.setY(event.getScreenY() - yOffset);
         });
-
-        //numberField.focusedProperty().addListener(observable -> root.requestFocus());
 
         allClearClick();
 
         displayFormat.setDecimalSeparatorAlwaysShown(false);
+
+
+        try
+        {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("fxml/extras.fxml"));
+
+            loader.setController(this);
+
+            GridPane drawerPane = loader.load();
+
+            drawer.setSidePane(drawerPane);
+            drawer.close();
+        }
+        catch (IOException e)
+        {
+            e.printStackTrace();
+        }
     }
 
     /*
@@ -81,12 +120,6 @@ public class Controller
         {
             String target = ((Button) actionEvent.getSource()).getText();
 
-            if (target.equals("π"))
-            {
-                setNumberField(Math.PI);
-                return;
-            }
-
             if (target.equals("0") && numberField.getText().contains("."))
             {
                 /* Cancel the replacement of the zero in ".0" */
@@ -96,8 +129,8 @@ public class Controller
                     return;
                 }
 
-                /* Add on to the decimal */
-                setNumberField(displayFormat.parse(numberField.getText() + target).doubleValue());
+                /* Add a zero to the end of the decimal without formatting (formatting will delete the 0) */
+                numberField.setText(numberField.getText() + 0);
             }
             else
             {
@@ -138,6 +171,9 @@ public class Controller
     {
         boolean recentlyConsumed = false;
 
+        /*
+         * Compute previous calculations if holding a number and operator is set before switching to another operation.
+         */
         if (!previousArithmeticSignClick && calculator.getHoldingNumber() != null)
         {
             try
@@ -174,6 +210,12 @@ public class Controller
                 break;
             case "^":
                 calculator.setState(Calculator.OperatorState.EXPONENTIAL);
+                break;
+            case "mod":
+                calculator.setState(Calculator.OperatorState.MODULUS);
+                break;
+            case "EE":
+                calculator.setState(Calculator.OperatorState.ENTEREXPONENTIAL);
                 break;
             default:
                 calculator.setState(Calculator.OperatorState.ADD);
@@ -221,7 +263,7 @@ public class Controller
 
     public void equalClick()
     {
-        if (calculator.getHoldingNumber() == null || calculator.state == null) return;
+        if (calculator.getHoldingNumber() == null || calculator.getState() == null) return;
         try
         {
             holdingNumberField.setText(holdingNumberField.getText() + numberField.getText());
@@ -229,6 +271,7 @@ public class Controller
             calculator.consume(displayFormat.parse(numberField.getText()).doubleValue());
 
             calculator.setHoldingNumber(null);
+            calculator.setState(null);
 
             setNumberField(calculator.getCurrentNumber());
 
@@ -270,27 +313,32 @@ public class Controller
         {
             String operator = "";
 
-            if (calculator.state != null)
-            switch (calculator.state)
-            {
-                case ADD:
-                    operator = " + ";
-                    break;
-                case SUBTRACT:
-                    operator = " - ";
-                    break;
-                case MULTIPLY:
-                    operator = " * ";
-                    break;
-                case DIVIDE:
-                    operator = " / ";
-                    break;
-                case EXPONENTIAL:
-                    operator = " ^ ";
-                    break;
-            }
+            if (calculator.getState() != null)
+                switch (calculator.getState())
+                {
+                    case ADD:
+                        operator = " + ";
+                        break;
+                    case SUBTRACT:
+                        operator = " - ";
+                        break;
+                    case MULTIPLY:
+                        operator = " * ";
+                        break;
+                    case DIVIDE:
+                        operator = " / ";
+                        break;
+                    case EXPONENTIAL:
+                        operator = " ^ ";
+                        break;
+                    case MODULUS:
+                        operator = " mod ";
+                        break;
+                    case ENTEREXPONENTIAL:
+                        operator = "E";
+                }
 
-            holdingNumberField.setText(displayFormat.format(num)+operator);
+            holdingNumberField.setText(displayFormat.format(num) + operator);
         }
     }
 
@@ -303,7 +351,8 @@ public class Controller
         calculator.setState(null);
         setNumberField(0);
 
-        String[] array = new String[]{"Ready to calculate!", "Calculator ready to go!", "Lock and loaded!", "Ready to ace that thing?", "Made with love!", "Let's practice medi... math!", "Be gentle with those clicks!", "Wow, this calculator talks?!", "You can count on me!", "Calc you later!"};
+        /* Useless greeting texts. */
+        String[] array = new String[]{"Ready to calculate!", "Calculator ready to go!", "Lock and loaded!", "Ready to ace that thing?", "Made with love!", "Let's do some math!", "Be gentle with those clicks!", "Wow, this calculator talks?!", "You can count on me!", "Calc you later!"};
         holdingNumberField.setText(array[new Random().nextInt(array.length)]);
     }
 
@@ -317,16 +366,16 @@ public class Controller
             switch (((Button) actionEvent.getSource()).getText())
             {
                 case "√":
-                    holdingNumberField.setText("√("+numberField.getText()+")");
+                    holdingNumberField.setText("√(" + numberField.getText() + ")");
                     setNumberField(Math.sqrt(displayFormat.parse(numberField.getText()).doubleValue()));
                     break;
                 case "%":
-                    holdingNumberField.setText(numberField.getText()+" / 100");
-                    setNumberField(displayFormat.parse(numberField.getText()).doubleValue()/100d);
+                    holdingNumberField.setText(numberField.getText() + " / 100");
+                    setNumberField(displayFormat.parse(numberField.getText()).doubleValue() / 100d);
                     break;
                 case "1/x":
-                    holdingNumberField.setText("1 / "+numberField.getText());
-                    setNumberField(1d/displayFormat.parse(numberField.getText()).doubleValue());
+                    holdingNumberField.setText("1 / " + numberField.getText());
+                    setNumberField(1d / displayFormat.parse(numberField.getText()).doubleValue());
                     break;
             }
 
@@ -348,33 +397,100 @@ public class Controller
             final String txt = String.valueOf(displayFormat.parse(numberField.getText()).doubleValue());
             String finalStr = txt;
 
-            System.out.println(txt.substring(txt.length()-2));
-
             if (txt.length() == 3) /* Single digit like 5.0 or 7.0 have 3 characters as a Double*/
             {
-                setNumberField(0);
-                return;
-            }
-
-            if (txt.indexOf(".") != txt.length() - 2)
-            {
-                System.out.println(txt);
-                System.out.println(txt.indexOf("."));
-                finalStr = finalStr.substring(0, finalStr.length() - 1);
-            }
-            else if (decimalSwitch || txt.substring(txt.length()-2).matches(".[1-9]"))
-            {
-                finalStr = finalStr.substring(0, finalStr.length() - 2);
-                decimalSwitch = false;
+                if (txt.substring(txt.length() - 2).matches(".[1-9]"))
+                {
+                    finalStr = finalStr.substring(0, finalStr.length() - 2);
+                }
+                else
+                {
+                    setNumberField(0);
+                    return;
+                }
             }
             else
             {
-                finalStr = finalStr.substring(0, finalStr.length() - 3);
+                if (txt.indexOf(".") != txt.length() - 2)
+                {
+                    finalStr = finalStr.substring(0, finalStr.length() - 1);
+                }
+                else if (decimalSwitch || txt.substring(txt.length() - 2).matches(".[1-9]"))
+                {
+                    finalStr = finalStr.substring(0, finalStr.length() - 2);
+                    decimalSwitch = false;
+                }
+                else
+                {
+                    finalStr = finalStr.substring(0, finalStr.length() - 3);
+                }
             }
 
             if (calculator.getHoldingNumber() == null) setHoldingNumberField(Double.parseDouble(finalStr));
             setNumberField(Double.parseDouble(finalStr));
 
+        }
+        catch (ParseException e)
+        {
+            e.printStackTrace();
+        }
+    }
+
+    public void drawerToggle()
+    {
+        if (drawer.isHidden())
+        {
+            drawer.open();
+        }
+        else
+        {
+            drawer.close();
+        }
+    }
+
+    public void sourceClick()
+    {
+        try
+        {
+            java.awt.Desktop.getDesktop().browse(new URI("https://github.com/Hexragon/Calculator"));
+        }
+        catch (IOException | URISyntaxException e)
+        {
+            e.printStackTrace();
+        }
+    }
+
+    /*
+     * Sets the current number to a preset number,
+     * no matter what the currently displayed number is.
+     */
+    public void presetNumberClick(ActionEvent actionEvent)
+    {
+        if (newNumberSwitch)
+        {
+            numberField.setText("0");
+            newNumberSwitch = false;
+            positiveNegativeIndicator.clear();
+        }
+
+        String target = ((Button) actionEvent.getSource()).getText();
+
+        switch (target)
+        {
+            case "π":
+                setNumberField(Math.PI);
+                break;
+            case "e":
+                setNumberField(Math.E);
+                break;
+            case "Rnd":
+                setNumberField(Math.random());
+                break;
+        }
+
+        try
+        {
+            setHoldingNumberField(displayFormat.parse(numberField.getText()).doubleValue());
         }
         catch (ParseException e)
         {
